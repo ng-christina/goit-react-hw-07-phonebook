@@ -1,30 +1,30 @@
 import style from './ContactList.module.css';
 import ContactItem from 'components/ContactItem/ContactItem';
 import { useSelector } from 'react-redux';
-import { getFilter, getContacts } from 'redux/selector';
+import {
+  selectContacts,
+  selectContactsFiltered,
+  selectError,
+  selectIsLoading,
+} from 'redux/selector';
 
 const ContactList = () => {
-  const filter = useSelector(getFilter);
-  const contacts = useSelector(getContacts);
+  const filteredContacts = useSelector(selectContactsFiltered);
+  const contacts = useSelector(selectContacts);
+  const error = useSelector(selectError);
+  const isLoading = useSelector(selectIsLoading);
 
-  const getFilteredContacts = () => {
-    const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(
-      contact =>
-        contact.name && contact.name.toLowerCase().includes(normalizedFilter)
-    );
-  };
-  const filteredContacts = getFilteredContacts();
   return (
     <ul className={style.conList}>
-      {filteredContacts.map(contact => (
-        <ContactItem
-          key={contact.id}
-          id={contact.id}
-          name={contact.name}
-          number={contact.number}
-        />
-      ))}
+      {isLoading && !error ? (
+        <p>Loading...</p>
+      ) : contacts.length === 0 && !error ? (
+        <p>Add your first number in phonebook</p>
+      ) : (
+        filteredContacts.map(({ id, name, number }) => (
+          <ContactItem key={id} contact={{ id, name, number }} />
+        ))
+      )}
     </ul>
   );
 };

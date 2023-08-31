@@ -1,11 +1,11 @@
 import style from './Form.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { addContact } from 'redux/contactsSlice';
-import { getContacts } from 'redux/selector';
+import { addContact } from 'redux/ApiContacts';
+import { selectContacts } from 'redux/selector';
 import { nanoid } from '@reduxjs/toolkit';
 
 const Form = () => {
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
 
   const handleSubmit = e => {
