@@ -17,9 +17,9 @@ const ContactList = () => {
   return (
     <ul className={style.conList}>
       {isLoading && !error ? (
-        <p>Loading...</p>
+        <p className={style.p}>Loading...</p>
       ) : contacts.length === 0 && !error ? (
-        <p>Add your first number in phonebook</p>
+        <p className={style.p}>Add your first number in phonebook</p>
       ) : (
         filteredContacts.map(({ id, name, number }) => (
           <ContactItem key={id} contact={{ id, name, number }} />
